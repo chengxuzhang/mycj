@@ -80,5 +80,6 @@ return [
             //controller/action
         ]
     ],
+    'language' =>'zh-CN',  //增加此行，默认使用中文
     'params' => $params,
 ];
