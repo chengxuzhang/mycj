@@ -5,12 +5,12 @@ namespace mdm\collection;
 use yii\web\AssetBundle;
 
 /**
- * Description of AnimateAsset
+ * Description of AppAsset
  *
  * @author Misbahul D Munir <misbahuldmunir@gmail.com>
  * @since 2.5
  */
-class AnimateAsset extends AssetBundle
+class AppAsset extends AssetBundle
 {
     /**
      * @inheritdoc
@@ -32,6 +32,7 @@ class AnimateAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
     public $jsOptions = [  
         'position' => \yii\web\View::POS_HEAD,   // 这是设置所有js放置的位置  

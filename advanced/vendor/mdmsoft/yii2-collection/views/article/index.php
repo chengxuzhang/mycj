@@ -1,7 +1,1 @@
-<?php 
-print_r($_GET);
-
-
- ?>
-
-hello world!
+<h1>欢迎页</h1>

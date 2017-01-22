@@ -79,7 +79,7 @@ ul.log li.dark {background-color: #E3E3E3;}
 						zTree.expandNode(treeNode);
 						return false;
 					} else {
-						demoIframe.attr("src","<?= Url::to(['article/index']) ?>?id="+treeNode.id);
+						demoIframe.attr("src","<?= Url::to(['article/create']) ?>?id="+treeNode.id);
 						return true;
 					}
 				}
@@ -221,7 +221,7 @@ ul.log li.dark {background-color: #E3E3E3;}
 			htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
 			maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
 			h = demoIframe.height() >= maxH ? minH:maxH ;
-			if (h < 530) h = 530;
+			if (h < 650) h = 650;
 			demoIframe.height(h);
 		}
 		//-->
@@ -237,6 +237,6 @@ ul.log li.dark {background-color: #E3E3E3;}
 	</div>
 
 	<div class="col-lg-9 col-md-9 col-sm-12">
-		<IFRAME ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100%  height=600px SRC="<?= Url::to(['article/index']) ?>"></IFRAME>
+		<IFRAME ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100% style="overflow: hidden;" SRC="<?= Url::to(['article/index']) ?>"></IFRAME>
 	</div>
 </div>
