@@ -230,6 +230,10 @@ ul.log li.dark {background-color: #E3E3E3;}
 <div class="article-index" style="overflow: hidden;">
 	<div class="col-lg-3 col-md-3 col-sm-12 hidden-xs">
 		<div class="content_wrap">
+			<div class="btn-group">
+				<?= Html::a('新建任务','javascript:;',['class'=>'btn btn-default btn-xs']) ?>
+				<?= Html::a('新建分组','javascript:;',['class'=>'btn btn-default btn-xs']) ?>
+			</div>
 			<div class="zTreeDemoBackground left">
 				<ul id="treeDemo" class="ztree"></ul>
 			</div>
@@ -239,4 +243,8 @@ ul.log li.dark {background-color: #E3E3E3;}
 	<div class="col-lg-9 col-md-9 col-sm-12">
 		<IFRAME ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100% style="overflow: hidden;" SRC="<?= Url::to(['article/index']) ?>"></IFRAME>
 	</div>
+</div>
+
+<div id="menu" style="display: none;">
+	
 </div>
