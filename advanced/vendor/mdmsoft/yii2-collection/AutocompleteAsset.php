@@ -20,13 +20,15 @@ class AutocompleteAsset extends AssetBundle
      * @inheritdoc
      */
     public $css = [
-        'jquery-ui.css',
+        'ztree/zTreeStyle/zTreeStyle.css',
     ];
     /**
      * @inheritdoc
      */
     public $js = [
-        'jquery-ui.js',
+        'ztree/jquery.ztree.core.js',
+        'ztree/jquery.ztree.excheck.js',
+        'ztree/jquery.ztree.exedit.js',
     ];
     /**
      * @inheritdoc

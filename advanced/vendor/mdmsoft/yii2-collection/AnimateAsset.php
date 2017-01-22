@@ -20,7 +20,14 @@ class AnimateAsset extends AssetBundle
      * @inheritdoc
      */
     public $css = [
-        'animate.css',
+        'ztree/zTreeStyle/zTreeStyle.css',
     ];
-
+    /**
+     * @inheritdoc
+     */
+    public $js = [
+        'ztree/jquery.ztree.core.js',
+        'ztree/jquery.ztree.excheck.js',
+        'ztree/jquery.ztree.exedit.js',
+    ];
 }
