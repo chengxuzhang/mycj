@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use mdm\collection\AnimateAsset;
+use mdm\collection\RightAsset;
 use mdm\collection\AutocompleteAsset;
 use yii\helpers\Url;
 
@@ -9,6 +9,7 @@ $this->title = Yii::t('rbac-collection', 'Site');
 $this->params['breadcrumbs'][] = $this->title;
 
 AutocompleteAsset::register($this);// 注册js
+RightAsset::register($this);// 注册js
 ?>
 
 <style type="text/css">
@@ -36,30 +37,11 @@ ul.log li.dark {background-color: #E3E3E3;}
 
 	<SCRIPT type="text/javascript">
 		<!--
-
-		var demoIframe;
 		var setting = {
-			/**
-			 * 异步加载
-			 */
-			// async: {
-			// 	enable: true,
-			// 	url:"../asyncData/getNodes.php",
-			// 	autoParam:["id", "name=n", "level=lv"],
-			// 	otherParam:{"otherParam":"zTreeAsyncTest"},
-			// 	dataFilter: filter
-			// },
-
 			view: {
-				addHoverDom: addHoverDom,
-				removeHoverDom: removeHoverDom,
-				selectedMulti: false
-			},
-			edit: {
-				enable: true,
-				editNameSelectAll: true,
-				showRemoveBtn: showRemoveBtn,
-				showRenameBtn: showRenameBtn
+				dblClickExpand: false,
+				showLine: false,
+				selectedMulti: false,
 			},
 			data: {
 				simpleData: {
@@ -67,165 +49,89 @@ ul.log li.dark {background-color: #E3E3E3;}
 				}
 			},
 			callback: {
-				beforeDrag: beforeDrag,
-				beforeEditName: beforeEditName,
-				beforeRemove: beforeRemove,
-				beforeRename: beforeRename,
-				onRemove: onRemove,
-				onRename: onRename,
 				beforeClick: function(treeId, treeNode) {
 					var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 					if (treeNode.isParent) {
 						zTree.expandNode(treeNode);
 						return false;
 					} else {
-						demoIframe.attr("src","<?= Url::to(['article/create']) ?>?id="+treeNode.id);
-						return true;
+						// demoIframe.attr("src",treeNode.file + ".html");
+						// return true;
+						console.log('hi');
 					}
 				}
-			},
-			/**
-			callback: {
-				beforeClick: function(treeId, treeNode) {
-					var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-					if (treeNode.isParent) {
-						zTree.expandNode(treeNode);
-						return false;
-					} else {
-						demoIframe.attr("src",treeNode.file + ".html");
-						return true;
-					}
-				}
+				// onClick: onClick,
 			}
-			*/
 		};
 
 		var zNodes =[
-			{ id:1, pId:0, name:"图片采集", open:true},
-			{ id:2, pId:1, name:"图片网站1"},
-			{ id:3, pId:1, name:"图片网站2"},
-			{ id:4, pId:1, name:"图片网站3"}
+			{ id:1, pId:0, name:"根 Root", open:true},
+			{ id:11, pId:1, name:"父节点 1-1", open:true},
+			{ id:111, pId:11, name:"叶子节点 1-1-1"},
+			{ id:112, pId:11, name:"叶子节点 1-1-2"},
+			{ id:113, pId:11, name:"叶子节点 1-1-3"},
+			{ id:114, pId:11, name:"叶子节点 1-1-4"},
+			{ id:12, pId:1, name:"父节点 1-2", open:true},
+			{ id:121, pId:12, name:"叶子节点 1-2-1"},
+			{ id:122, pId:12, name:"叶子节点 1-2-2"},
+			{ id:123, pId:12, name:"叶子节点 1-2-3"},
+			{ id:124, pId:12, name:"叶子节点 1-2-4"},
+			{ id:13, pId:1, name:"父节点 1-3", open:true},
+			{ id:131, pId:13, name:"叶子节点 1-3-1"},
+			{ id:132, pId:13, name:"叶子节点 1-3-2"},
+			{ id:133, pId:13, name:"叶子节点 1-3-3"},
+			{ id:134, pId:13, name:"叶子节点 1-3-4"}
 		];
-		var log, className = "dark";
-		function beforeDrag(treeId, treeNodes) {
-			return false;
-		}
-		function beforeEditName(treeId, treeNode) {
-			className = (className === "dark" ? "":"dark");
-			showLog("[ "+getTime()+" beforeEditName ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
+
+		function onClick(e,treeId, treeNode) {
 			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-			zTree.selectNode(treeNode);
-			setTimeout(function() {
-				if (confirm("进入节点 -- " + treeNode.name + " 的编辑状态吗？")) {
-					setTimeout(function() {
-						zTree.editName(treeNode);
-					}, 0);
-				}
-			}, 0);
+			zTree.expandNode(treeNode);
 			return false;
-		}
-		function beforeRemove(treeId, treeNode) {
-			className = (className === "dark" ? "":"dark");
-			showLog("[ "+getTime()+" beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-			zTree.selectNode(treeNode);
-			return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
-		}
-		function onRemove(e, treeId, treeNode) {
-			showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
-		}
-		function beforeRename(treeId, treeNode, newName, isCancel) {
-			className = (className === "dark" ? "":"dark");
-			showLog((isCancel ? "<span style='color:red'>":"") + "[ "+getTime()+" beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>":""));
-			if (newName.length == 0) {
-				setTimeout(function() {
-					var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-					zTree.cancelEditName();
-					alert("节点名称不能为空.");
-				}, 0);
-				return false;
-			}
-			return true;
-		}
-		function onRename(e, treeId, treeNode, isCancel) {
-			showLog((isCancel ? "<span style='color:red'>":"") + "[ "+getTime()+" onRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>":""));
-		}
-		function showRemoveBtn(treeId, treeNode) {
-			// return !treeNode.isFirstNode;
-			return true;
-		}
-		function showRenameBtn(treeId, treeNode) {
-			// return !treeNode.isLastNode;
-			return true;
-		}
-		function showLog(str) {
-			if (!log) log = $("#log");
-			log.append("<li class='"+className+"'>"+str+"</li>");
-			if(log.children("li").length > 8) {
-				log.get(0).removeChild(log.children("li")[0]);
-			}
-		}
-		function getTime() {
-			var now= new Date(),
-			h=now.getHours(),
-			m=now.getMinutes(),
-			s=now.getSeconds(),
-			ms=now.getMilliseconds();
-			return (h+":"+m+":"+s+ " " +ms);
 		}
 
-		var newCount = 1;
-		function addHoverDom(treeId, treeNode) {
-			if(!treeNode.isParent){
-				return false;
-			}
-			var sObj = $("#" + treeNode.tId + "_span");
-			if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
-			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-				+ "' title='创建新任务' onfocus='this.blur();'></span>";
-			sObj.after(addStr);
-			var btn = $("#addBtn_"+treeNode.tId);
-			if (btn) btn.bind("click", function(){
-				var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-				zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
-				return false;
-			});
-		};
-		function removeHoverDom(treeId, treeNode) {
-			$("#addBtn_"+treeNode.tId).unbind().remove();
-		};
-		function selectAll() {
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-			zTree.setting.edit.editNameSelectAll =  $("#selectAll").attr("checked");
-		}
-		
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-			// $("#selectAll").bind("click", selectAll);
-			demoIframe = $("#testIframe");
-			demoIframe.bind("load", loadReady);
 		});
-		/*
-		$(document).ready(function(){
-			var t = $("#tree");
-			t = $.fn.zTree.init(t, setting, zNodes);
-			demoIframe = $("#testIframe");
-			demoIframe.bind("load", loadReady);
-			var zTree = $.fn.zTree.getZTreeObj("tree");
-			zTree.selectNode(zTree.getNodeByParam("id", 101));
-
-		});
-		*/
-		function loadReady() {
-			var bodyH = demoIframe.contents().find("body").get(0).scrollHeight,
-			htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
-			maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
-			h = demoIframe.height() >= maxH ? minH:maxH ;
-			if (h < 650) h = 650;
-			demoIframe.height(h);
-		}
 		//-->
 	</SCRIPT>
+
+
+<script type="text/javascript">
+$(function(){
+	var menu = new BootstrapMenu('.node_name', {
+	   fetchElementData: function($rowElem) {
+	   	var id = $rowElem.data('rowId');
+	    return id;
+	  },
+	  actionsGroups: [
+    ['deleteRow']
+  ],
+	  actions: {
+		  createTask:{
+		  	iconClass:'glyphicon glyphicon-plus',
+		    name: '新建任务',
+		    onClick: function(row) {
+		      console.log(row);
+		    }
+		  },
+	  createGroup:{
+	  	iconClass:'glyphicon glyphicon-book',
+	    name: '新建分组',
+	    onClick: function(row) {
+	      console.log(row);
+	    }
+	  },
+	  deleteRow:{
+	  	iconClass:'glyphicon glyphicon-trash',
+	    name: '删除任务',
+	    onClick: function(row) {
+	      console.log(row);
+	    }
+	  }
+	}
+	});
+})
+</script>
 
 <div class="article-index" style="overflow: hidden;">
 	<div class="col-lg-3 col-md-3 col-sm-12 hidden-xs">
