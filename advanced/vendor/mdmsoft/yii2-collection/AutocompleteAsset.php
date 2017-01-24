@@ -30,6 +30,8 @@ class AutocompleteAsset extends AssetBundle
         'ztree/jquery.ztree.core.js',
         'ztree/jquery.ztree.excheck.js',
         'ztree/jquery.ztree.exedit.js',
+        'layer/layer.js',
+        'ajax-form.js',
     ];
     /**
      * @inheritdoc

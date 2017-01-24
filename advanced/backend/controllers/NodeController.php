@@ -1,22 +1,19 @@
 <?php
 
-namespace mdm\collection\controllers;
+namespace backend\controllers;
 
 use Yii;
-use mdm\collection\models\Node;
-use mdm\collection\models\NodeSearch;
+use backend\models\Node;
+use backend\models\NodeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * NodeController implements the CRUD actions for Node model.
  */
 class NodeController extends Controller
 {
-
-	public $layout = 'right';
     /**
      * @inheritdoc
      */
@@ -26,7 +23,7 @@ class NodeController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['GET'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -67,13 +64,13 @@ class NodeController extends Controller
     public function actionCreate()
     {
         $model = new Node();
-        Yii::$app->response->format = Response::FORMAT_JSON;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        	$data = $model->getNodeData();
-            return ['status'=>1,'message'=>'创建成功','postFun'=>1,'data'=>$data];
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-        	return ['status'=>0,'message'=>'创建失败','postFun'=>1];
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -86,13 +83,13 @@ class NodeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        Yii::$app->response->format = Response::FORMAT_JSON;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        	$data = $model->getNodeData();
-            return ['status'=>1,'message'=>'修改成功','postFun'=>1,'data'=>$data];
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return ['status'=>0,'message'=>'修改失败','postFun'=>1];
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -104,16 +101,9 @@ class NodeController extends Controller
      */
     public function actionDelete($id)
     {
-    	$model = $this->findModel($id);
-    	Yii::$app->response->format = Response::FORMAT_JSON;
+        $this->findModel($id)->delete();
 
-    	if($model->find()->where(['pid'=>$id])->all()){
-    		return ['status'=>0,'message'=>'请先删除该目录下的子节点','getFun'=>1];
-    	}
-        $model->delete();
-        $data = $model->getNodeData();
-
-        return ['status'=>1,'message'=>'修改成功','getFun'=>1,'data'=>$data];
+        return $this->redirect(['index']);
     }
 
     /**

@@ -10,7 +10,12 @@ class SiteController extends Controller
 {
 
 	public function actionIndex(){
-		return $this->render('index');
+		$nodeModel = new \mdm\collection\models\Node;
+		$nodeData = $nodeModel->getNodeData();
+		return $this->render('index',[
+			'nodeModel' => $nodeModel,
+			'nodeData' => $nodeData,
+		]);
 	}
 
 	public function actionCreate(){
