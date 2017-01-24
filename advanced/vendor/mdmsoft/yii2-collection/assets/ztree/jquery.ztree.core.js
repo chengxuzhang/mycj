@@ -1252,7 +1252,7 @@
                     "' title='' treeNode", consts.id.ICON, " class='", view.makeNodeIcoClass(setting, node),
                     "' style='", view.makeNodeIcoStyle(setting, node), "'></span><span id='", node.tId, consts.id.SPAN,
                     "' class='", consts.className.NAME,
-                    "' data-row-id='", node.id,"'>", name, "</span>");
+                    "' data-row-id='", node.id,"' data-row-type='",node.type,"'>", name, "</span>");
             },
             makeDOMNodeLine: function (html, setting, node) {
                 html.push("<span id='", node.tId, consts.id.SWITCH, "' title='' class='", view.makeNodeLineClass(setting, node), "' treeNode", consts.id.SWITCH, "></span>");

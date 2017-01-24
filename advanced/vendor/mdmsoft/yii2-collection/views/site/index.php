@@ -24,7 +24,7 @@ div#rMenu ul li{
 div.content_wrap {width: 100%;height:380px;}
 div.content_wrap div.left{float: left;width: 100%;}
 div.content_wrap div.right{float: right;width: 340px;}
-div.zTreeDemoBackground {width:100%;height:362px;text-align:left;}
+div.zTreeDemoBackground {width:100%;height:370px;text-align:left;}
 
 ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f0f6e4;width:100%;height:360px;overflow-y:scroll;overflow-x:auto;}
 ul.log {border: 1px solid #617775;background: #f0f6e4;width:100%;height:170px;overflow: hidden;}
@@ -59,28 +59,28 @@ ul.log li.dark {background-color: #E3E3E3;}
 						// return true;
 						console.log('hi');
 					}
-				}
+				},
 				// onClick: onClick,
 			}
 		};
 
 		var zNodes =[
-			{ id:1, pId:0, name:"根 Root", open:true},
-			{ id:11, pId:1, name:"父节点 1-1", open:true},
-			{ id:111, pId:11, name:"叶子节点 1-1-1"},
-			{ id:112, pId:11, name:"叶子节点 1-1-2"},
-			{ id:113, pId:11, name:"叶子节点 1-1-3"},
-			{ id:114, pId:11, name:"叶子节点 1-1-4"},
-			{ id:12, pId:1, name:"父节点 1-2", open:true},
-			{ id:121, pId:12, name:"叶子节点 1-2-1"},
-			{ id:122, pId:12, name:"叶子节点 1-2-2"},
-			{ id:123, pId:12, name:"叶子节点 1-2-3"},
-			{ id:124, pId:12, name:"叶子节点 1-2-4"},
-			{ id:13, pId:1, name:"父节点 1-3", open:true},
-			{ id:131, pId:13, name:"叶子节点 1-3-1"},
-			{ id:132, pId:13, name:"叶子节点 1-3-2"},
-			{ id:133, pId:13, name:"叶子节点 1-3-3"},
-			{ id:134, pId:13, name:"叶子节点 1-3-4"}
+			{ id:1, pId:0, name:"根 Root", open:true, iconSkin:"pIcon01", type:10},
+			{ id:11, pId:1, name:"父节点 1-1", open:true, iconSkin:"pIcon01", type:10},
+			{ id:111, pId:11, name:"叶子节点 1-1-1", iconSkin:"icon01", type:20},
+			{ id:112, pId:11, name:"叶子节点 1-1-2", iconSkin:"icon01", type:20},
+			{ id:113, pId:11, name:"叶子节点 1-1-3", iconSkin:"icon01", type:20},
+			{ id:114, pId:11, name:"叶子节点 1-1-4", iconSkin:"icon01", type:20},
+			{ id:12, pId:1, name:"父节点 1-2", open:true, iconSkin:"pIcon01", type:10},
+			{ id:121, pId:12, name:"叶子节点 1-2-1", iconSkin:"icon01", type:20},
+			{ id:122, pId:12, name:"叶子节点 1-2-2", iconSkin:"icon01", type:20},
+			{ id:123, pId:12, name:"叶子节点 1-2-3", iconSkin:"icon01", type:20},
+			{ id:124, pId:12, name:"叶子节点 1-2-4", iconSkin:"icon01", type:20},
+			{ id:133, pId:13, name:"2222", iconSkin:"icon01", type:20},
+			{ id:13, pId:1, name:"父节点 1-3", open:true, iconSkin:"pIcon01", type:10},
+			{ id:131, pId:13, name:"叶子节点 1-3-1", iconSkin:"icon01", type:20},
+			{ id:132, pId:13, name:"叶子节点 1-3-2", iconSkin:"icon01", type:20},
+			{ id:134, pId:13, name:"叶子节点 1-3-4", iconSkin:"icon01", type:20}
 		];
 
 		function onClick(e,treeId, treeNode) {
@@ -100,33 +100,82 @@ ul.log li.dark {background-color: #E3E3E3;}
 $(function(){
 	var menu = new BootstrapMenu('.node_name', {
 	   fetchElementData: function($rowElem) {
-	   	var id = $rowElem.data('rowId');
-	    return id;
+	   	var data = $rowElem.data();
+	    return data;
 	  },
 	  actionsGroups: [
-    ['deleteRow']
-  ],
+	  	['createTask','createGroup'],
+	  	['runTask','editTask'],
+    	['deleteTask','deleteGroup'],
+    	['renameNode'],
+  	  ],
 	  actions: {
+		  createGroup:{
+		  	iconClass:'fa-folder',
+		    name: '新建分组',
+		    onClick: function(row) {
+		      console.log(row);
+		    },
+	    isEnabled: function(row) {
+	        return row.rowType==10?true:false;
+	      }
+		  },
 		  createTask:{
-		  	iconClass:'glyphicon glyphicon-plus',
+		  	iconClass:'fa-plus',
 		    name: '新建任务',
 		    onClick: function(row) {
 		      console.log(row);
-		    }
+		    },
+	    isEnabled: function(row) {
+	        return row.rowType==10?true:false;
+	      }
 		  },
-	  createGroup:{
-	  	iconClass:'glyphicon glyphicon-book',
-	    name: '新建分组',
-	    onClick: function(row) {
-	      console.log(row);
-	    }
+		editTask:{
+			iconClass:'fa-pencil',
+			name:'编辑规则',
+			onClick:function(row){
+				console.log(row);
+			},
+	    isEnabled: function(row) {
+	        return row.rowType==20?true:false;
+	      }
+		},
+	  runTask:{
+	  	iconClass:'fa-magnet',
+	  	name:'开始采集',
+	  	onClick:function(row){
+	  		console.log(row);
+	  	},
+	    isEnabled: function(row) {
+	        return row.rowType==20?true:false;
+	      }
 	  },
-	  deleteRow:{
-	  	iconClass:'glyphicon glyphicon-trash',
+	  deleteTask:{
+	  	iconClass:'fa-trash',
 	    name: '删除任务',
 	    onClick: function(row) {
 	      console.log(row);
-	    }
+	    },
+	    isShown: function(row) {
+	        return row.rowGroup==1?false:true;
+	      }
+	  },
+	  renameNode:{
+	  	iconClass:'fa-sign-out',
+	  	'name':'重命名',
+	  	'onClick':function(row){
+	  		console.log(row);
+	  	}
+	  },
+	  deleteGroup:{
+	  	iconClass:'fa-trash',
+	    name: '删除分组',
+	    onClick: function(row) {
+	      console.log(row);
+	    },
+	    isShown: function(row) {
+	        return row.rowGroup==1?true:false;
+	      }
 	  }
 	}
 	});

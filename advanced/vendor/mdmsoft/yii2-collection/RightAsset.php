@@ -20,6 +20,7 @@ class RightAsset extends AssetBundle
      * @inheritdoc
      */
     public $css = [
+        'youjian/css/font-awesome.css',
     ];
     /**
      * @inheritdoc

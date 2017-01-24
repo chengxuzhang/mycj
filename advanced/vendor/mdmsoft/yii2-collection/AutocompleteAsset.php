@@ -21,6 +21,7 @@ class AutocompleteAsset extends AssetBundle
      */
     public $css = [
         'ztree/zTreeStyle/zTreeStyle.css',
+        'ztree/zTreeStyle/autoIcon.css',
     ];
     /**
      * @inheritdoc
