@@ -3,9 +3,8 @@
 namespace mdm\collection\controllers;
 
 use Yii;
-use yii\web\Controller;
 
-class ArticleController extends Controller
+class ArticleController extends \mdm\collection\components\BaseController
 {
 	public $layout = 'right';
 

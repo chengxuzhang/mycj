@@ -3,12 +3,10 @@
 namespace mdm\collection\controllers;
 
 use Yii;
-use yii\web\Controller;
 use QL\QueryList;
 
-class SiteController extends Controller
+class SiteController extends \mdm\collection\components\BaseController
 {
-
 	public function actionIndex(){
 		$nodeModel = new \mdm\collection\models\Node;
 		$nodeData = $nodeModel->getNodeData();
@@ -16,13 +14,5 @@ class SiteController extends Controller
 			'nodeModel' => $nodeModel,
 			'nodeData' => $nodeData,
 		]);
-	}
-
-	public function actionCreate(){
-		echo 333;
-	}
-
-	public function actionUpdate(){
-
 	}
 }

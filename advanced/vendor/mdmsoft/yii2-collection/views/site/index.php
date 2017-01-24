@@ -71,7 +71,7 @@ ul.log li.dark {background-color: #E3E3E3;}
 				$id = $val["id"];
 				$pid = $val['pid'];
 				$name = $val['name'];
-				$iconSkin = $val['type']==10?'pIcon01':'icon01';
+				$iconSkin = $val['type']==$nodeModel::COMMON_STATUS_ACTIVED?'pIcon01':'icon01';
 				$type = $val['type'];
 				echo '{ id:'.$id.', pId:'.$pid.', name:"'.$name.'", open:true, iconSkin:"'.$iconSkin.'", type:'.$type.'},';
 			}
@@ -88,7 +88,7 @@ ul.log li.dark {background-color: #E3E3E3;}
 			if(data.status == 1){
 				zNodes = [];
 				$.each(data.data,function(k,v){
-					var iconSkin = v.type==10?'pIcon01':'icon01';
+					var iconSkin = v.type==<?= $nodeModel::COMMON_STATUS_ACTIVED ?>?'pIcon01':'icon01';
 					var node = {id:v.id,pId:v.pid,name:v.name,open:true,iconSkin:iconSkin,type:v.type};
 					zNodes.push(node);
 				});
@@ -108,7 +108,7 @@ ul.log li.dark {background-color: #E3E3E3;}
 			if(data.status == 1){
 				zNodes = [];
 				$.each(data.data,function(k,v){
-					var iconSkin = v.type==10?'pIcon01':'icon01';
+					var iconSkin = v.type==<?= $nodeModel::COMMON_STATUS_ACTIVED ?>?'pIcon01':'icon01';
 					var node = {id:v.id,pId:v.pid,name:v.name,open:true,iconSkin:iconSkin,type:v.type};
 					zNodes.push(node);
 				});
@@ -145,7 +145,7 @@ $(function(){
 		    name: '新建分组',
 		    onClick: function(row) {
 				$("input[name='Node[pid]']").val(row.rowId);
-				$("input[name='Node[type]']").val(10);
+				$("input[name='Node[type]']").val(<?= $nodeModel::COMMON_STATUS_ACTIVED ?>);
 		      	layer.open({
 				    type: 1,
 				    title: '新建分组',
@@ -160,7 +160,7 @@ $(function(){
 			    });
 		    },
 	    isEnabled: function(row) {
-	        return row.rowType==10?true:false;
+	        return row.rowType==<?= $nodeModel::COMMON_STATUS_ACTIVED ?>?true:false;
 	      }
 		  },
 		  createTask:{
@@ -168,7 +168,7 @@ $(function(){
 		    name: '新建任务',
 		    onClick: function(row) {
 		    	$("input[name='Node[pid]']").val(row.rowId);
-				$("input[name='Node[type]']").val(20);
+				$("input[name='Node[type]']").val(<?= $nodeModel::COMMON_STATUS_DISABLED ?>);
 		      	layer.open({
 				    type: 1,
 				    title: '新建任务',
@@ -183,7 +183,7 @@ $(function(){
 			    });
 		    },
 	    isEnabled: function(row) {
-	        return row.rowType==10?true:false;
+	        return row.rowType==<?= $nodeModel::COMMON_STATUS_ACTIVED ?>?true:false;
 	      }
 		  },
 		editTask:{
@@ -204,7 +204,7 @@ $(function(){
 			    });
 			},
 	    isEnabled: function(row) {
-	        return row.rowType==20?true:false;
+	        return row.rowType==<?= $nodeModel::COMMON_STATUS_DISABLED ?>?true:false;
 	      }
 		},
 	  runTask:{
@@ -214,7 +214,7 @@ $(function(){
 	  		console.log(row);
 	  	},
 	    isEnabled: function(row) {
-	        return row.rowType==20?true:false;
+	        return row.rowType==<?= $nodeModel::COMMON_STATUS_DISABLED ?>?true:false;
 	      }
 	  },
 	  deleteTask:{
@@ -229,7 +229,7 @@ $(function(){
             });
 	    },
 	    isShown: function(row) {
-	        return row.rowType==20?true:false;
+	        return row.rowType==<?= $nodeModel::COMMON_STATUS_DISABLED ?>?true:false;
 	      }
 	  },
 	  renameNode:{
@@ -264,7 +264,7 @@ $(function(){
             });
 	    },
 	    isShown: function(row) {
-	        return row.rowType==10?true:false;
+	        return row.rowType==<?= $nodeModel::COMMON_STATUS_ACTIVED ?>?true:false;
 	      }
 	  }
 	}
@@ -276,8 +276,8 @@ $(function(){
 	<div class="col-lg-3 col-md-3 col-sm-12 hidden-xs">
 		<div class="content_wrap">
 			<div class="btn-group">
-				<?= Html::a('新建任务','javascript:;',['class'=>'btn btn-default btn-xs create-node','data-row-type'=>20]) ?>
-				<?= Html::a('新建分组','javascript:;',['class'=>'btn btn-default btn-xs create-node','data-row-type'=>10]) ?>
+				<?= Html::a('新建任务','javascript:;',['class'=>'btn btn-default btn-xs create-node','data-row-type'=>$nodeModel::COMMON_STATUS_DISABLED]) ?>
+				<?= Html::a('新建分组','javascript:;',['class'=>'btn btn-default btn-xs create-node','data-row-type'=>$nodeModel::COMMON_STATUS_ACTIVED]) ?>
 			</div>
 			<div class="zTreeDemoBackground left">
 				<ul id="treeDemo" class="ztree"></ul>
@@ -336,7 +336,7 @@ $(function(){
 		$("input[name='Node[type]']").val(type);
 		layer.open({
 			type: 1,
-		    title: type==10?'新建分组':'新建任务',
+		    title: type==<?= $nodeModel::COMMON_STATUS_ACTIVED ?>?'新建分组':'新建任务',
 		    shadeClose: true,
 		    skin: 'layui-layer-rim', //加上边框
 		    shade: 0.3,

@@ -12,7 +12,7 @@ use Yii;
  * @property string $name
  * @property integer $type
  */
-class Node extends \yii\db\ActiveRecord
+class Node extends \mdm\collection\components\BaseModel
 {
     /**
      * @inheritdoc

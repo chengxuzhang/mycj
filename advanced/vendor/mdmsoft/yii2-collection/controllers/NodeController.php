@@ -5,7 +5,6 @@ namespace mdm\collection\controllers;
 use Yii;
 use mdm\collection\models\Node;
 use mdm\collection\models\NodeSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -13,9 +12,8 @@ use yii\web\Response;
 /**
  * NodeController implements the CRUD actions for Node model.
  */
-class NodeController extends Controller
+class NodeController extends \mdm\collection\components\BaseController
 {
-
 	public $layout = 'right';
     /**
      * @inheritdoc
@@ -30,33 +28,6 @@ class NodeController extends Controller
                 ],
             ],
         ];
-    }
-
-    /**
-     * Lists all Node models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new NodeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Node model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
     }
 
     /**
